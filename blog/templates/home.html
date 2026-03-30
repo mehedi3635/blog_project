@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>All Blog Posts</h2>
+
+{% for post in posts %}
+<div class="card mt-3">
+    <div class="card-body">
+        <h4>{{ post.title }}</h4>
+        <p>{{ post.content|truncatewords:20 }}</p>
+        <small>By {{ post.author }} | {{ post.created_at }}</small>
+        <br><br>
+        <a href="{% url 'post_detail' post.id %}" class="btn btn-primary">Read More</a>
+
+        {% if user == post.author %}
+            <a href="{% url 'edit_post' post.id %}" class="btn btn-warning">Edit</a>
+            <a href="{% url 'delete_post' post.id %}" class="btn btn-danger">Delete</a>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>{{ post.title }}</h2>
+<p>{{ post.content }}</p>
+<small>By {{ post.author }} | {{ post.created_at }}</small>
+
+<hr>
+
+<!-- LIKE BUTTON -->
+<form action="{% url 'like_post' post.id %}" method="POST">
+    {% csrf_token %}
+    <button class="btn btn-outline-danger">
+        ❤️ Like ({{ post.total_likes }})
+    </button>
+</form>
+
+<hr>
+
+<h4>Comments</h4>
+
+{% for comment in comments %}
+<div class="border p-2 mt-2">
+    <strong>{{ comment.user }}</strong>
+    <p>{{ comment.content }}</p>
+</div>
+{% empty %}
+<p>No comments yet.</p>
+{% endfor %}
+
+<hr>
+
+{% if user.is_authenticated %}
+<form action="{% url 'add_comment' post.id %}" method="POST">
+    {% csrf_token %}
+    <textarea name="content" class="form-control" placeholder="Write a comment..." required></textarea>
+    <br>
+    <button class="btn btn-success">Add Comment</button>
+</form>
+{% else %}
+<p>Please login to comment.</p>
+{% endif %}
+
+{% endblock %}
