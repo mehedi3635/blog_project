@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>All Blog Posts</h2>
+<h2 style="color: blue;" class="t-center">All Blog Posts</h2>
 
-{% for post in posts %}
-<div class="card mt-3">
+
+<div class="d-flex mt-3 ms-4 gap-4">
+    {% for post in posts %}
+<div class="card mt-3 ">
     <div class="card-body">
-        <h4>{{ post.title }}</h4>
+        <h4 style="color: brown;">{{ post.title }}</h4>
         <p>{{ post.content|truncatewords:20 }}</p>
         <small>By {{ post.author }} | {{ post.created_at }}</small>
         <br><br>
@@ -19,5 +21,6 @@
     </div>
 </div>
 {% endfor %}
+</div>
 
 {% endblock %}
